@@ -42,4 +42,3 @@ if __name__=="__main__":
     parser.add_argument("--exp_name", type=str, default=DEFAULT_EXP_NAME, help="Set exp Name")
 
     args = parser.parse_args()
-    main(args)
