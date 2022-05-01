@@ -3,3 +3,6 @@ data/
 
 # EXPERIMENTS 
 VITC/
+
+# WORKSPACE
+.vscode
