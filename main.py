@@ -1,7 +1,9 @@
 import os 
 import argparse
 
+import pytorch_lightning as pl 
 from pytorch_lightning.utilities.seed import seed_everything
+
 
 from src.config import (
     AVAIL_GPUS,
@@ -15,9 +17,30 @@ from src.config import (
     WEIGHT_DECAY
 ) 
 
-def main(args):
-    pass
+from models.baseline import BaseLine
+from src.dataset import ImageNetteDataModule
 
+def main(args):
+
+    seed_everything(42)     # Global seed 42
+    
+    dm = ImageNetteDataModule(
+        batch_size=args.batch_size, 
+        num_workers=args.workers
+    )
+
+    dm.setup()
+
+    # print(next(iter(dm.train_dataloader())))
+
+    model = BaseLine()
+
+    trainer = pl.Trainer(
+        gpus=args.gpu, 
+        max_epochs=args.epochs,
+    )
+
+    trainer.fit(model, datamodule=dm)
 
 if __name__=="__main__":
 
@@ -42,3 +65,5 @@ if __name__=="__main__":
     parser.add_argument("--exp_name", type=str, default=DEFAULT_EXP_NAME, help="Set exp Name")
 
     args = parser.parse_args()
+
+    main(args)

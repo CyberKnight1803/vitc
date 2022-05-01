@@ -3,6 +3,10 @@ import torch
 
 # PATHS 
 PATH_IMAGENET_DATASET = os.environ.get("PATH_IMAGENET_DATASET", "./data/ImageNet")
+PATH_IMAGENET_TRAIN = os.environ.get("PATH_IMAGENET_TRAIN", "./data/ImageNet/imagenette2-160/train")
+PATH_IMAGENET_VAL = os.environ.get("PATH_IMAGENET_TRAIN", "./data/ImageNet/imagenette2-160/val")
+PATH_IMAGENET_CSV = os.environ.get("PATH_IMAGENET_CSV", "./data/ImageNet/imagenette2-160/noisy_imagenette.csv")
+ 
 PATH_EXPERIMENTS = os.environ.get("PATH_EXPERIMENTS", "./runs")
 
 # DATASETS

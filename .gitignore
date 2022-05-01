@@ -3,6 +3,11 @@ data/
 
 # EXPERIMENTS 
 VITC/
+lightning_logs/
 
 # WORKSPACE
 .vscode
+
+# CACHE 
+**/__pycache__
+
