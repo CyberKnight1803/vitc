@@ -2,6 +2,7 @@ import os
 import argparse
 
 import pytorch_lightning as pl 
+from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.utilities.seed import seed_everything
 
 
@@ -29,15 +30,23 @@ def main(args):
         num_workers=args.workers
     )
 
-    dm.setup()
+    # dm.setup()
 
     # print(next(iter(dm.train_dataloader())))
 
     model = BaseLine()
 
+    logger = WandbLogger(
+        project="VITC", 
+        name=args.exp_name,
+        id=args.exp_name,  
+        save_dir="./runs"
+    )
+
     trainer = pl.Trainer(
         gpus=args.gpu, 
         max_epochs=args.epochs,
+        logger=logger
     )
 
     trainer.fit(model, datamodule=dm)

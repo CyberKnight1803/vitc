@@ -4,6 +4,9 @@ data/
 # EXPERIMENTS 
 VITC/
 lightning_logs/
+runs/
+
+final.ckpt
 
 # WORKSPACE
 .vscode

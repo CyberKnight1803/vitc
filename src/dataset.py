@@ -32,12 +32,16 @@ class ImageNetteDataset(Dataset):
     def __getitem__(self, index):
 
         img = cv2.imread(os.path.join(os.path.dirname(PATH_IMAGENET_CSV), self.df["path"].iloc[index]))
-        img = cv2.resize(img, (128, 128))
+        img = cv2.resize(img, (224, 224))
+
+        img = torch.tensor(img)
+        img = img.permute(2, 0, 1)
+        img = img / 255.0
 
         label = torch.tensor(self.label_map[self.df["noisy_labels_0"].iloc[index]])
 
         return {
-            "image": torch.tensor(img),
+            "image": img.float(),
             "label": label
         },
 
@@ -65,6 +69,13 @@ class ImageNetteDataModule(pl.LightningDataModule):
         )
     
     def val_dataloader(self) -> DataLoader:
+        return DataLoader(
+            self.val_dataset,
+            batch_size=self.batch_size, 
+            num_workers=self.num_workers,
+        )
+    
+    def predict_dataloader(self) -> DataLoader:
         return DataLoader(
             self.val_dataset,
             batch_size=self.batch_size, 
